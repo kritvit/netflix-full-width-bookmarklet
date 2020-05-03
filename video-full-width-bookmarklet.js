@@ -3,7 +3,7 @@ javascript:(function () {
 	'use strict';
 
 	/*
-		Netflix full width bookmarklet version 1.0.0 by Andreas Viklund.
+		Netflix/Prime Video/HBO Nordic full width bookmarklet version 1.1.0 by Andreas Viklund.
 		https://github.com/kritvit/netflix-full-width-bookmarklet
 	*/
 
@@ -11,7 +11,26 @@ javascript:(function () {
 		offset = 0,
 		namespace = 'nf-fw',
 		id = namespace+'-controls',
-		video = document.querySelector('#netflix-player video');
+		video = document.querySelector('video'),
+		appendTo = '';
+
+	if (window.location.host.indexOf('hbonordic.com') > -1) {
+
+		appendTo = '.vjs-control-bar';
+
+	}
+
+	if (window.location.host.indexOf('netflix.com') > -1) {
+
+		appendTo = '.PlayerControlsNeo__bottom-controls';
+
+	}
+
+	if (window.location.host.indexOf('primevideo.com') > -1) {
+
+		appendTo = '.seekBar';
+
+	}
 
 	if (!document.getElementById(id)) {
 		addControls();
@@ -66,9 +85,9 @@ javascript:(function () {
 		controls.innerHTML = '<div id="'+namespace+'-offset" style="padding: 8px 16px;"></div>';
 		
 		controls.style.position 	= 'absolute';
-		controls.style.left 		= '101%';
-		controls.style.bottom 		= '-4px';
-		controls.style.zIndex 		= 1;
+		controls.style.right 		= '1rem';
+		controls.style.bottom 		= '100%';
+		controls.style.zIndex 		= 9999999;
 		controls.style.textAlign 	= 'center';
 		controls.style.fontSize 	= '.8rem';
 		controls.style.textShadow 	= '0px 1px #000';
@@ -106,7 +125,7 @@ javascript:(function () {
 			}
 		 }, false);
 
-		document.querySelector('#netflix-player .player-controls-wrapper').appendChild(controls);
+		document.querySelector(appendTo).appendChild(controls);
 	}
 
 })();
